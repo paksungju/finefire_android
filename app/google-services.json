@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "682058343244",
+    "firebase_url": "https://finefire-c6b83.firebaseio.com",
+    "project_id": "finefire-c6b83",
+    "storage_bucket": "finefire-c6b83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682058343244:android:a42572321b0f7ae90c65e9",
+        "android_client_info": {
+          "package_name": "com.finefire.finefire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682058343244-kt4ng7ijk5m1011iu93sl1cq4k0ckldm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8iAvkMZlgN4vEcOmQK0IPeUp6rmpmoVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682058343244-kt4ng7ijk5m1011iu93sl1cq4k0ckldm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "682058343244-5lpcn9nv29s6hdhulnr689ncdqk261jc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.finefire.finefire"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
