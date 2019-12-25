@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorRed"
+    tools:context=".LoginActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorRed"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:background="@drawable/logo"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="40dp"/>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorRed"
+                android:orientation="vertical"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="50dp">
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" 로그인"
+                    android:gravity="left"
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"/>
+
+                <EditText
+                    android:id="@+id/et_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textEmailAddress"
+                    android:hint="아이디 (e-mail)"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorDarkWhite"
+                    android:textColorLink="@color/colorWhite"/>
+
+                <EditText
+                    android:id="@+id/et_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="비밀번호"
+                    android:inputType="textPassword"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorDarkWhite"
+                    android:textColorLink="@color/colorWhite"/>
+
+                <Button
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:id="@+id/bt_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="로그인"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/colorWhite"
+                    android:background="@color/colorDarkRed" />
+                <Button
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:id="@+id/bt_idpw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="아이디/비밀번호 찾기"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/colorWhite"
+                    android:background="@color/colorDarkRed" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
