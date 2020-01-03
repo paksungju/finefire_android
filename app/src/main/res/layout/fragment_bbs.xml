@@ -8,6 +8,7 @@
     tools:context=".fragment.BBSFragment">
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabIndicatorColor="@color/colorRed"
@@ -15,11 +16,13 @@
         app:tabSelectedTextColor="@color/colorDarkGray">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/ti_notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="공지사항" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/ti_qna"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Q&amp;A" />
@@ -27,6 +30,34 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/ll_notice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_notice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/ll_qna"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="질문 등록하기"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorRed"
+                android:layout_margin="20dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_qna"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
     </FrameLayout>
 </LinearLayout>
