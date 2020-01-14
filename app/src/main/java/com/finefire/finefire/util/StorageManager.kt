@@ -18,4 +18,16 @@ class StorageManager {
         editor.apply()
     }
 
+    fun getLoginToken(context: Context): String? {
+        val appData = context.getSharedPreferences(preferencesKey, MODE_PRIVATE)
+        return appData.getString("login_token", "")
+    }
+
+    fun setLoginToken(context: Context, str: String) {
+        val appData = context.getSharedPreferences(preferencesKey, MODE_PRIVATE)
+        val editor = appData.edit()
+        editor.putString("login_token", str.trim { it <= ' ' })
+        editor.apply()
+    }
+
 }

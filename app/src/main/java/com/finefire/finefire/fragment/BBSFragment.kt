@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.finefire.finefire.MainActivity
 import com.finefire.finefire.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_bbs.*
 import kotlinx.android.synthetic.main.layout_bbs_item.view.*
 import org.json.JSONArray
@@ -27,7 +29,6 @@ class BBSFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         ll_notice.visibility = View.VISIBLE
         ll_qna.visibility = View.GONE
 
@@ -106,6 +107,13 @@ class BBSFragment : Fragment() {
             LayoutInflater.from(parent.context).inflate(R.layout.layout_bbs_item, parent, false)) {
             val tv_title = itemView.tv_title
             val tv_date = itemView.tv_date
+        }
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden){
+            (activity as MainActivity).toolbar.title = "게시판"
         }
     }
 }
