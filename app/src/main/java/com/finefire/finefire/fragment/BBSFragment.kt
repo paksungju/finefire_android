@@ -1,12 +1,15 @@
 package com.finefire.finefire.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.finefire.finefire.BoardActivity
 import com.finefire.finefire.MainActivity
 import com.finefire.finefire.R
 import com.google.android.material.tabs.TabLayout
@@ -62,7 +65,7 @@ class BBSFragment : Fragment() {
         obj.put("date", "2020-01-05")
         list.put(obj)
 
-        rv_notice.adapter = Adapter(list)
+        rv_notice.adapter = Adapter(list, 0)
         rv_notice.layoutManager = LinearLayoutManager(this.context)
         rv_notice.setHasFixedSize(true)
 
@@ -72,48 +75,52 @@ class BBSFragment : Fragment() {
         obj.put("title", "제목7")
         obj.put("date", "2020-01-07")
         list.put(obj)
-        rv_qna.adapter = Adapter(list)
+        rv_qna.adapter = Adapter(list, 1)
         rv_qna.layoutManager = LinearLayoutManager(this.context)
         rv_qna.setHasFixedSize(true)
 
     }
 
-    class Adapter() : RecyclerView.Adapter<Adapter.MainViewHolder>() {
-        constructor(list: JSONArray) : this() {
-            this.list = list
+    class Adapter(var list: JSONArray, var type: Int) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val convertView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_bbs_item, parent, false)
+            return ViewHolder(convertView)
         }
-
-        private var list: JSONArray = JSONArray()
-
-        override fun onCreateViewHolder(parent: ViewGroup, p1: Int) = MainViewHolder(parent)
-
 
         override fun getItemCount(): Int {
             return list.length()
         }
 
-        override fun onBindViewHolder(holer: MainViewHolder, position: Int) {
+        override fun onBindViewHolder(holer: ViewHolder, position: Int) {
 
             list[position].let { item ->
                 with(holer) {
                     var i = item as? JSONObject
                     tv_title.text = i?.getString("title")
                     tv_date.text = i?.getString("date")
+
                 }
             }
-        }
 
-        inner class MainViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_bbs_item, parent, false)) {
+        }
+        inner class ViewHolder(convertView: View) : RecyclerView.ViewHolder(convertView) {
             val tv_title = itemView.tv_title
             val tv_date = itemView.tv_date
+            init {
+                convertView.setOnClickListener{
+                    val intent = Intent(convertView.context, BoardActivity::class.java)
+                    intent.putExtra("type", type)
+                    convertView.context.startActivity(intent)
+                }
+            }
         }
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if(!hidden){
-            (activity as MainActivity).toolbar.title = "게시판"
+            (activity as MainActivity).tv_title?.text = "게시판"
         }
     }
 }

@@ -44,7 +44,7 @@ class SettingFragment : Fragment() {
         ll_version.setOnClickListener {
             var cm = this.context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             cm.setPrimaryClip(ClipData.newPlainText("text", StorageManager().getToken(this.context!!)))
-            Toast.makeText(context,"토큰이 복사되었습니다.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"토큰이 복사되었습니다.",Toast.LENGTH_SHORT).show()
         }
 
         tv_version.text = getVersionInfo(this.context)
@@ -56,9 +56,9 @@ class SettingFragment : Fragment() {
             return version
         }
         try {
-            packageInfo = context.getApplicationContext()
-                .getPackageManager()
-                .getPackageInfo(context.getApplicationContext().getPackageName(), 0)
+            packageInfo = context.applicationContext
+                .packageManager
+                .getPackageInfo(context.applicationContext.packageName, 0)
             version = packageInfo.versionName
         } catch (e: PackageManager.NameNotFoundException) {
         }
@@ -68,7 +68,7 @@ class SettingFragment : Fragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if(!hidden){
-            (activity as MainActivity).toolbar.title = "설정"
+            (activity as MainActivity).tv_title?.text = "설정"
         }
     }
 }

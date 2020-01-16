@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar style="@style/Widget.MaterialComponents.Toolbar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:minHeight="@dimen/abc_action_bar_default_height_material"
+    app:layout_collapseMode="none"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:background="@color/colorRed">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:text="제목"
+            android:layout_gravity="left|center_vertical"
+            android:textSize="17dp"
+            android:layout_marginLeft="0dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_search"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/ic_notifications_active_black_24dp"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+    </FrameLayout>
+</androidx.appcompat.widget.Toolbar>

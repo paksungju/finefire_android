@@ -137,7 +137,7 @@ class AlarmFragment : Fragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if(!hidden){
-            (activity as MainActivity).toolbar.title = "센서 목록"
+            (activity as MainActivity).tv_title?.text = "센서 목록"
         }
     }
 }

@@ -18,12 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorRed"
-                android:layout_gravity="top"/>
+            <include
+                layout="@layout/toolbar"/>
+<!--            <androidx.appcompat.widget.Toolbar-->
+<!--                android:id="@+id/toolbar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@color/colorRed"-->
+<!--                android:layout_gravity="top"/>-->
 
             <FrameLayout
                 android:id="@+id/fragment_container"

@@ -21,13 +21,13 @@ class LoginActivity : AppCompatActivity() {
 
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
             val deviceToken = instanceIdResult.token
-            Log.d("a", "token = " + deviceToken!!)
+            Log.d("a", "token = " + deviceToken)
             StorageManager().setToken(this, deviceToken)
         }
-        bt_login.setOnClickListener(){
+        bt_login.setOnClickListener {
             OnLogin()
         }
-        bt_idpw.setOnClickListener(){
+        bt_idpw.setOnClickListener {
             OnIDPW()
         }
 

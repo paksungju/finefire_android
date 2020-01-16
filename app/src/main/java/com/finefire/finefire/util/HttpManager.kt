@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -54,7 +55,7 @@ class HttpManager(var context: Context) {
                     .addFormDataPart("username", id)
                     .addFormDataPart("password", pw)
                     .addFormDataPart("push_token", pushToken!!)
-                    .addFormDataPart("device_os", "android", RequestBody.create(mediaType, ""))
+                    .addFormDataPart("device_os", "android", "".toRequestBody(mediaType))
                     .build()
                 val request: Request = Request.Builder()
                     .url("${rootUrl}oauth/token")

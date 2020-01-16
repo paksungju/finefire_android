@@ -8,10 +8,12 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.finefire.finefire.fragment.AlarmFragment
@@ -26,7 +28,8 @@ class MainActivity : AppCompatActivity() {
     var alramFragment = AlarmFragment()
     var bbsFragment = BBSFragment()
     var settingFragment = SettingFragment()
-
+    var toolbar:Toolbar? = null
+    var tv_title:TextView? = null
     val mOnNavigationItemSelectedListener: BottomNavigationView.OnNavigationItemSelectedListener =
         object : BottomNavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(@NonNull item: MenuItem): Boolean {
@@ -63,24 +66,20 @@ class MainActivity : AppCompatActivity() {
         baseFragment = alramFragment
         transaction.commit()
 
-        val toggle = ActionBarDrawerToggle(
-            this,
-            drawer_layout,
-            toolbar,
-            R.string.app_name,
-            R.string.app_name
-        )
+        toolbar = findViewById<Toolbar>(R.id.toolbar)
+        tv_title = toolbar?.findViewById<TextView>(R.id.tv_title)
+        val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.app_name, R.string.app_name)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            toggle.getDrawerArrowDrawable().setColor(getColor(R.color.colorWhite));
+            toggle.drawerArrowDrawable.color = getColor(R.color.colorWhite)
         } else {
-            toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorWhite));
+            toggle.drawerArrowDrawable.color = resources.getColor(R.color.colorWhite)
         }
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-        toolbar.setTitleTextColor(resources.getColor(R.color.colorWhite))
-        toolbar.title = "센서 목록"
+        toolbar?.setTitleTextColor(resources.getColor(R.color.colorWhite))
+        toolbar?.title = "센서 목록"
 
-        val nav_header= nav_view.getHeaderView(0);
+        val nav_header= nav_view.getHeaderView(0)
 
         val ll_my = nav_header.findViewById<FrameLayout>(R.id.ll_my)
         val ll_terms = nav_header.findViewById<FrameLayout>(R.id.ll_terms)
