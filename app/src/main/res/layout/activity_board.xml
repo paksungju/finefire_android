@@ -52,18 +52,30 @@
             android:textSize="15dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"/>
-
-        <TextView
-            android:id="@+id/tv_board_date"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"
-            android:text="2020-01-04"
-            android:layout_gravity="right|center_vertical"
-            android:textSize="15dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:text="2020-01-04"
+                android:layout_gravity="left|center_vertical"
+                android:textSize="15dp"/>
 
+            <TextView
+                android:id="@+id/tv_board_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:text="2020-01-04"
+                android:layout_gravity="right|center_vertical"
+                android:textSize="15dp"/>
+        </FrameLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -72,22 +84,35 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"/>
 
-        <FrameLayout
-            android:id="@+id/fragment_container"
+        <WebView
+            android:id="@+id/wv_board_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:elevation="1dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#f2f2f2"/>
 
-            <TextView
-                android:id="@+id/tv_board_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/colorBlack"
-                android:text="안녕하세요 \n파인파이어 공지사항 입니다\n새해복많이 받으시고 \n건강하세요"
-                android:layout_gravity="right|center_vertical"
-                android:textSize="15dp"
-                android:layout_margin="20dp"/>
-        </FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorDarkGray"
+            android:text="코멘트"
+            android:textSize="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"/>
+        <EditText
+            android:id="@+id/multiAutoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:inputType="textMultiLine"
+            android:textSize="13dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/view_rounded_corner_gray"
+            android:padding="20dp"/>
+
     </LinearLayout>
 </FrameLayout>

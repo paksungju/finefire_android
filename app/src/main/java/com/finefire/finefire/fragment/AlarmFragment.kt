@@ -3,14 +3,14 @@ package com.finefire.finefire.fragment
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.GridView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.finefire.finefire.MainActivity
 import com.finefire.finefire.R
@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 import kotlinx.android.synthetic.main.fragment_alarm.*
 import org.json.JSONArray
+import java.util.*
+import kotlin.concurrent.schedule
 
 class AlarmFragment : Fragment() {
 
@@ -73,14 +75,13 @@ class AlarmFragment : Fragment() {
             for (i in 0 until datas.length()) {
                 val data = datas.getJSONObject(i)
                 val sensors = data.getJSONArray("sensors")
-                val mdName = data.getString("mdName")
-                val mdDisplayName = data.getString("mdDisplayName")
+
                 for (j in 0 until sensors.length()) {
                     val sensor = sensors.getJSONObject(j)
-                    sensor.put("mdName", mdName)
-                    sensor.put("mdDisplayName", mdDisplayName)
-                    list.put(sensor)
+//                    sensor.getString("ssCondition", 0)
+                    data.put("image", Random().nextInt(3))
                 }
+                list.put(data)
             }
             val adapter = GridAdapter(list)
             gridview.adapter = adapter
@@ -96,6 +97,7 @@ class AlarmFragment : Fragment() {
 
         private var list:JSONArray = JSONArray()
 
+        @RequiresApi(Build.VERSION_CODES.M)
         override fun getView(position:Int, convertView: View?, parent: ViewGroup?):View{
             // Inflate the custom view
             val inflater = parent?.context?.
@@ -105,13 +107,27 @@ class AlarmFragment : Fragment() {
             val obj = this.list.getJSONObject(position)
             // Get the custom view widgets reference
             val ll_main = view.findViewById<LinearLayout>(R.id.ll_main)
-            val tv_title = view.findViewById<TextView>(R.id.tv_title)
-            val tv_temp = view.findViewById<TextView>(R.id.tv_temp)
-            val tv_wetness = view.findViewById<TextView>(R.id.tv_wetness)
+            val tv_mdDisplayName = view.findViewById<TextView>(R.id.tv_mdDisplayName)
+            val tv_mdName = view.findViewById<TextView>(R.id.tv_mdName)
+            val tv_mdSpec = view.findViewById<TextView>(R.id.tv_mdSpec)
+            val iv_image = view.findViewById<ImageView>(R.id.iv_image)
 
-            tv_title.text = obj.getString("ssDisplayName")
-            tv_temp.text = "${obj.getString("temperature_val")} ℃"
-            tv_wetness.text = "${obj.getString("humidity_val")} %"
+            tv_mdDisplayName.text = obj.getString("mdDisplayName")
+            tv_mdName.text = obj.getString("mdName")
+            tv_mdSpec.text = obj.getString("mdSpec")
+            var image = 0
+            if(obj.has("image")) {
+                image = obj.getInt("image")
+            }
+            if(image == 0){
+                iv_image.background = context?.getDrawable(R.drawable.ic_smile)
+            }else if (image == 1){
+                iv_image.background = context?.getDrawable(R.drawable.ic_sad)
+                ll_main.background = context?.getDrawable(R.drawable.view_rounded_corner_green)
+            }else if (image == 2){
+                iv_image.background = context?.getDrawable(R.drawable.ic_sceptic)
+                setEmergency(view, true)
+            }
             ll_main.setOnClickListener{
                 val activity  = parent.context as Activity
 
@@ -120,6 +136,36 @@ class AlarmFragment : Fragment() {
             return view
         }
 
+        @RequiresApi(Build.VERSION_CODES.M)
+        fun setEmergency(view: View, f:Boolean){
+            val ll_main = view.findViewById<LinearLayout>(R.id.ll_main)
+            val tv_mdDisplayName = view.findViewById<TextView>(R.id.tv_mdDisplayName)
+            val tv_mdName = view.findViewById<TextView>(R.id.tv_mdName)
+            val tv_mdSpec = view.findViewById<TextView>(R.id.tv_mdSpec)
+            if(ll_main == null)
+                return
+            var textColor = 0
+            var backColor: Drawable? = null
+            if (f){
+                textColor  = context?.getColor(R.color.colorBlack)!!
+                backColor  = context?.getDrawable(R.drawable.view_rounded_corner_gray)
+            } else{
+                textColor  = context?.getColor(R.color.colorDarkWhite)!!
+                backColor  = context?.getDrawable(R.drawable.view_rounded_corner_red)
+            }
+
+            tv_mdDisplayName.setTextColor(textColor)
+            tv_mdName.setTextColor(textColor)
+            tv_mdSpec.setTextColor(textColor)
+            ll_main.background = backColor
+
+
+            Timer("getData", false).schedule(500) {
+                (context as MainActivity).runOnUiThread {
+                    setEmergency(view, !f)
+                }
+            }
+        }
         override fun getItem(position: Int): Any? {
             return list[position]
         }

@@ -12,13 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.finefire.finefire.BoardActivity
 import com.finefire.finefire.MainActivity
 import com.finefire.finefire.R
+import com.finefire.finefire.util.HttpManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_alarm.*
 import kotlinx.android.synthetic.main.fragment_bbs.*
 import kotlinx.android.synthetic.main.layout_bbs_item.view.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
 
 class BBSFragment : Fragment() {
 
@@ -50,34 +53,31 @@ class BBSFragment : Fragment() {
         })
 
 
-        var list = JSONArray()
-        var obj = JSONObject()
-        obj.put("title", "제목1")
-        obj.put("date", "2020-01-01")
-        list.put(obj)
-        obj.put("title", "제목2")
-        obj.put("date", "2020-01-03")
-        list.put(obj)
-        obj.put("title", "제목3")
-        obj.put("date", "2020-01-04")
-        list.put(obj)
-        obj.put("title", "제목4")
-        obj.put("date", "2020-01-05")
-        list.put(obj)
+        HttpManager(context!!).get("api/board/notice"){ obj ->
+            var list = JSONArray()
+            val datas = obj.getJSONArray("boardList")
+            for (i in 0 until datas.length()) {
+                val data = datas.getJSONObject(i)
 
-        rv_notice.adapter = Adapter(list, 0)
-        rv_notice.layoutManager = LinearLayoutManager(this.context)
-        rv_notice.setHasFixedSize(true)
+                list.put(data)
+            }
+            rv_notice.adapter = Adapter(list, 0)
+            rv_notice.layoutManager = LinearLayoutManager(this.context)
+            rv_notice.setHasFixedSize(true)
+        }
 
-        obj.put("title", "제목6")
-        obj.put("date", "2020-01-07")
-        list.put(obj)
-        obj.put("title", "제목7")
-        obj.put("date", "2020-01-07")
-        list.put(obj)
-        rv_qna.adapter = Adapter(list, 1)
-        rv_qna.layoutManager = LinearLayoutManager(this.context)
-        rv_qna.setHasFixedSize(true)
+        HttpManager(context!!).get("api/board/cs"){ obj ->
+            var list = JSONArray()
+            val datas = obj.getJSONArray("boardList")
+            for (i in 0 until datas.length()) {
+                val data = datas.getJSONObject(i)
+
+                list.put(data)
+            }
+            rv_qna.adapter = Adapter(list, 1)
+            rv_qna.layoutManager = LinearLayoutManager(this.context)
+            rv_qna.setHasFixedSize(true)
+        }
 
     }
 
@@ -97,20 +97,22 @@ class BBSFragment : Fragment() {
             list[position].let { item ->
                 with(holer) {
                     var i = item as? JSONObject
-                    tv_title.text = i?.getString("title")
-                    tv_date.text = i?.getString("date")
-
+                    itemView.tv_title.text = i?.getString("wrSubject")
+                    itemView.tv_date.text = i?.getString("wrDatetime")
+                    itemView.tv_name.text = i?.getString("wrName")
                 }
             }
 
         }
         inner class ViewHolder(convertView: View) : RecyclerView.ViewHolder(convertView) {
-            val tv_title = itemView.tv_title
-            val tv_date = itemView.tv_date
             init {
                 convertView.setOnClickListener{
                     val intent = Intent(convertView.context, BoardActivity::class.java)
+                    var i = list[layoutPosition] as? JSONObject
+                    var wrId = i?.getInt("wrId")
+
                     intent.putExtra("type", type)
+                    intent.putExtra("wrId", wrId)
                     convertView.context.startActivity(intent)
                 }
             }
