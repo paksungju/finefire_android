@@ -37,6 +37,8 @@ class SettingFragment : Fragment() {
         ll_logout.setOnClickListener {
 
             StorageManager().setLoginToken(this.context!!, "")
+            StorageManager().setID(this.context!!, "")
+            StorageManager().setPW(this.context!!, "")
             val intent = Intent(this.context, LoginActivity::class.java)
             startActivity(intent)
             this.activity?.finish()

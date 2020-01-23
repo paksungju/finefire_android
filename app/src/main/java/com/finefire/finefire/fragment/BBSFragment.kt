@@ -5,23 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.finefire.finefire.BoardActivity
-import com.finefire.finefire.MainActivity
-import com.finefire.finefire.R
+import com.finefire.finefire.*
 import com.finefire.finefire.util.HttpManager
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_alarm.*
 import kotlinx.android.synthetic.main.fragment_bbs.*
 import kotlinx.android.synthetic.main.layout_bbs_item.view.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.*
 
 class BBSFragment : Fragment() {
 
@@ -52,6 +45,16 @@ class BBSFragment : Fragment() {
             }
         })
 
+        bt_write.setOnClickListener {
+            var intent =Intent(this.context, BoardWriteActivity::class.java)
+            this.context?.startActivity(intent)
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
 
         HttpManager(context!!).get("api/board/notice"){ obj ->
             var list = JSONArray()
@@ -78,7 +81,6 @@ class BBSFragment : Fragment() {
             rv_qna.layoutManager = LinearLayoutManager(this.context)
             rv_qna.setHasFixedSize(true)
         }
-
     }
 
     class Adapter(var list: JSONArray, var type: Int) : RecyclerView.Adapter<Adapter.ViewHolder>() {
@@ -107,11 +109,14 @@ class BBSFragment : Fragment() {
         inner class ViewHolder(convertView: View) : RecyclerView.ViewHolder(convertView) {
             init {
                 convertView.setOnClickListener{
-                    val intent = Intent(convertView.context, BoardActivity::class.java)
+                    var intent:Intent? = null
+                    if (type == 0){
+                        intent = Intent(convertView.context, BoardNoticeActivity::class.java)
+                    }else{
+                        intent = Intent(convertView.context, BoardQnAActivity::class.java)
+                    }
                     var i = list[layoutPosition] as? JSONObject
                     var wrId = i?.getInt("wrId")
-
-                    intent.putExtra("type", type)
                     intent.putExtra("wrId", wrId)
                     convertView.context.startActivity(intent)
                 }

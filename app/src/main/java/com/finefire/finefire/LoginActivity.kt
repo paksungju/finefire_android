@@ -25,23 +25,29 @@ class LoginActivity : AppCompatActivity() {
             StorageManager().setToken(this, deviceToken)
         }
         bt_login.setOnClickListener {
-            OnLogin()
+
+            val id = et_id.text.toString()
+            val pw = et_pw.text.toString()
+            OnLogin(id, pw)
         }
         bt_idpw.setOnClickListener {
             OnIDPW()
         }
-
-        goToMain()
+        val id = StorageManager().getID(this)
+        val pw = StorageManager().getPW(this)
+        if( !(id?.isEmpty())!! && !(pw?.isEmpty())!!){
+            OnLogin(id, pw)
+        }
     }
 
-    fun OnLogin(){
+    fun OnLogin(id:String, pw:String){
 
-        val id = et_id.text.toString()
-        val pw = et_pw.text.toString()
         HttpManager(this@LoginActivity).login(id,pw) {
 
             val access_token = StorageManager().getLoginToken(this@LoginActivity)
             if(!access_token?.isEmpty()!!) {
+                StorageManager().setID(this, id)
+                StorageManager().setPW(this, pw)
                 goToMain()
             }else{
                 val oDialog = AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog)

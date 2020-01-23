@@ -47,6 +47,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <Button
+                android:id="@+id/bt_write"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:text="질문 등록하기"

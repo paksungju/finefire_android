@@ -20,7 +20,16 @@
         <activity android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
-        <activity android:name=".BoardActivity"
+        <activity android:name=".BoardNoticeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity android:name=".BoardQnAActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity android:name=".ModemActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity android:name=".BoardWriteActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <service

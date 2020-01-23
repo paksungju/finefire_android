@@ -2,6 +2,7 @@ package com.finefire.finefire.fragment
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -12,7 +13,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.finefire.finefire.BoardQnAActivity
 import com.finefire.finefire.MainActivity
+import com.finefire.finefire.ModemActivity
 import com.finefire.finefire.R
 import com.finefire.finefire.util.HttpManager
 import com.google.android.gms.internal.measurement.zzwx.init
@@ -36,41 +39,17 @@ class AlarmFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
-
         gridview.numColumns = 2
         gridview.horizontalSpacing = 5
         gridview.verticalSpacing = 5
         gridview.stretchMode = GridView.STRETCH_COLUMN_WIDTH
 
-        var list = JSONArray()
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
-//        list.put("")
+        load()
 
-
+    }
+    fun load(){
         HttpManager(context!!).get("api/modem"){ obj ->
+            var list = JSONArray()
             val datas = obj.getJSONArray("data")
             for (i in 0 until datas.length()) {
                 val data = datas.getJSONObject(i)
@@ -78,7 +57,6 @@ class AlarmFragment : Fragment() {
 
                 for (j in 0 until sensors.length()) {
                     val sensor = sensors.getJSONObject(j)
-//                    sensor.getString("ssCondition", 0)
                     data.put("image", Random().nextInt(3))
                 }
                 list.put(data)
@@ -131,6 +109,11 @@ class AlarmFragment : Fragment() {
             ll_main.setOnClickListener{
                 val activity  = parent.context as Activity
 
+                val mdId = obj.getInt("mdId")
+
+                var intent = Intent(activity, ModemActivity::class.java)
+                intent.putExtra("mdId", mdId)
+                activity.startActivity(intent)
             }
 
             return view

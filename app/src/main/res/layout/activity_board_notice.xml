@@ -87,32 +87,9 @@
         <WebView
             android:id="@+id/wv_board_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:background="#f2f2f2"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorDarkGray"
-            android:text="코멘트"
-            android:textSize="15dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"/>
-        <EditText
-            android:id="@+id/multiAutoCompleteTextView"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:inputType="textMultiLine"
-            android:textSize="13dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/view_rounded_corner_gray"
-            android:padding="20dp"/>
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:background="#00000000"/>
 
     </LinearLayout>
 </FrameLayout>

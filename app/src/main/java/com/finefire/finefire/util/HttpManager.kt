@@ -39,6 +39,13 @@ class HttpManager(var context: Context) {
         getTask.execute()
     }
 
+    fun post(params:Map<String,String>, subUrl:String, ce: (obj:JSONObject) -> Unit){
+        val postTask  = PostTask()
+        postTask.subUrl = subUrl
+        postTask.params = params
+        this.ce = ce
+        postTask.execute()
+    }
     inner class LoginTask : AsyncTask<Void?, Void?, String>() {
         var id = ""
         var pw = ""
@@ -85,8 +92,14 @@ class HttpManager(var context: Context) {
                 if(body.has("access_token")){
                     val access_token = body.getString("access_token")
                     StorageManager().setLoginToken(context, access_token)
+                    val userDetail = body.getJSONObject("userDetail")
+                    val name  = userDetail.getString("name")
+                    val us_id  = userDetail.getInt("us_id")
+                    StorageManager().setName(context, name)
+                    StorageManager().setUserId(context, us_id)
+                }else{
+                    StorageManager().setLoginToken(context, "")
                 }
-
                 ce(body)
             } catch (e: JSONException) {
                 e.printStackTrace()
@@ -152,6 +165,65 @@ class HttpManager(var context: Context) {
                 e.printStackTrace()
             }
         }
+    }
+
+    inner class PostTask : AsyncTask<Void?, Void?, String>() {
+        var subUrl = ""
+        lateinit var params:Map<String,String>
+
+        @SuppressLint("NewApi")
+        override fun doInBackground(vararg p: Void?): String {
+            var response:String = ""
+            try {
+                val loginToken = StorageManager().getLoginToken(context)
+                val client: OkHttpClient = OkHttpClient().newBuilder().build()
+                val builder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                for(key in params.keys){
+                    builder.addFormDataPart(key, params[key]!!)
+                }
+                val body = builder.build()
+                val request: Request = Request.Builder()
+                    .url("${rootUrl}${subUrl}")
+                    .method("POST", body)
+                    .addHeader("Authorization", "Bearer ${loginToken}")
+                    .build()
+
+                var res: Response = client.newCall(request).execute()
+                var strs = res.body?.string()
+                Log.d("",strs)
+
+                response = strs.toString()
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return response
+        }
+
+        override fun onPostExecute(result: String) {
+            super.onPostExecute(result)
+            result(result)
+        }
+
+    }
+
+    fun result(result:String){
+        try {
+            Log.d("", result)
+            var body = JSONObject(result)
+            if (!body.has("code")){
+                val oDialog = AlertDialog.Builder(context)
+                oDialog.setMessage("서버 연결에 실패 하였습니다")
+                    .setTitle("네트워크를 확인해주세요")
+                    .setPositiveButton("확인") { dialog, which -> }
+                    .setCancelable(false).show()
+            }else{
+                ce(body)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
     }
 
 }
