@@ -93,16 +93,50 @@ class AlarmFragment : Fragment() {
             tv_mdDisplayName.text = obj.getString("mdDisplayName")
             tv_mdName.text = obj.getString("mdName")
             tv_mdSpec.text = obj.getString("mdSpec")
-            var image = 0
-            if(obj.has("image")) {
-                image = obj.getInt("image")
+
+            var danger = 0
+            var sensors = obj.getJSONArray("sensors")
+            for( i in 0 until sensors.length()){
+                var sensor = sensors.getJSONObject(i)
+                var temperature_type = sensor.getString("temperature_type")
+                if(temperature_type.equals("W", ignoreCase = true) && danger < 1){
+                    danger = 1
+                }else if(temperature_type.equals("D", ignoreCase = true) && danger < 2){
+                    danger = 2
+                }
+                var gas_type = sensor.getString("gas_type")
+                if(gas_type.equals("W", ignoreCase = true) && danger < 1){
+                    danger = 1
+                }else if(gas_type.equals("D", ignoreCase = true) && danger < 2){
+                    danger = 2
+                }
+                var smoke_type = sensor.getString("smoke_type")
+                if(smoke_type.equals("W", ignoreCase = true) && danger < 1){
+                    danger = 1
+                }else if(smoke_type.equals("D", ignoreCase = true) && danger < 2){
+                    danger = 2
+                }
+                var humidity_type = sensor.getString("humidity_type")
+                if(humidity_type.equals("W", ignoreCase = true) && danger < 1){
+                    danger = 1
+                }else if(humidity_type.equals("D", ignoreCase = true) && danger < 2){
+                    danger = 2
+                }
+                var flame_type = sensor.getString("flame_type")
+                if(flame_type.equals("W", ignoreCase = true) && danger < 1){
+                    danger = 1
+                }else if(flame_type.equals("D", ignoreCase = true) && danger < 2){
+                    danger = 2
+                }
             }
-            if(image == 0){
+
+
+            if(danger == 0){
                 iv_image.background = context?.getDrawable(R.drawable.ic_smile)
-            }else if (image == 1){
+            }else if (danger == 1){
                 iv_image.background = context?.getDrawable(R.drawable.ic_sad)
-                ll_main.background = context?.getDrawable(R.drawable.view_rounded_corner_green)
-            }else if (image == 2){
+                context?.getColor(R.color.colorWarning)?.let { ll_main.setBackgroundColor(it) }
+            }else if (danger == 2){
                 iv_image.background = context?.getDrawable(R.drawable.ic_sceptic)
                 setEmergency(view, true)
             }

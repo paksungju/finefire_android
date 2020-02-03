@@ -23,7 +23,7 @@
                 android:id="@+id/iv_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 android:layout_gravity="center"/>
 
             <LinearLayout
@@ -54,6 +54,58 @@
                     android:text=""
                     android:layout_gravity="right"
                     android:textColor="@color/colorDarkGray"
+                    android:layout_margin="2dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/tv_temperature_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="온도 : 23"
+                    android:layout_gravity="right"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="23dp"
+                    android:layout_margin="2dp"/>
+                <TextView
+                    android:id="@+id/tv_gas_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="온도 : 23"
+                    android:layout_gravity="right"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="23dp"
+                    android:layout_margin="2dp"/>
+                <TextView
+                    android:id="@+id/tv_smoke_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="온도 : 23"
+                    android:layout_gravity="right"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="23dp"
+                    android:layout_margin="2dp"/>
+                <TextView
+                    android:id="@+id/tv_humidity_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="온도 : 23"
+                    android:layout_gravity="right"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="23dp"
+                    android:layout_margin="2dp"/>
+                <TextView
+                    android:id="@+id/tv_flame_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="온도 : 23"
+                    android:layout_gravity="right"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="23dp"
                     android:layout_margin="2dp"/>
             </LinearLayout>
         </LinearLayout>
